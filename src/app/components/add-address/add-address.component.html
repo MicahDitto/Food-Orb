@@ -1,0 +1,39 @@
+<h3>Add an Address</h3>
+<form [formGroup]="newAddressForm" (ngSubmit)="addAddress()">
+    <label for="">Name
+        <input required type="text"  [(ngModel)]="newAddressForm.name" name="name"
+         #name="ngModel"/>
+        <p *ngIf="name.errors && name.touched">
+            <span class="required" *ngIf="name.errors.required">Full name is required</span>
+            <span class="required" *ngIf="name.errors.pattern">Please only enter characters</span>
+        </p>
+    </label><br>
+    <label for="">Address
+        <input required type="text"  [(ngModel)]="newAddressForm.address"  
+        name="address" #address="ngModel"/>
+        <p *ngIf="address.errors && address.touched">
+            <span class="required" *ngIf="address.errors.required">Address is required</span>
+        </p>
+    </label><br>
+    <label for="">City
+        <input required type="text"  [(ngModel)]="newAddressForm.city"  name="city" #city="ngModel" />
+        <p *ngIf="city.errors && city.touched">
+            <span class="required" *ngIf="city.errors.required">City is required</span>
+        </p>
+    </label><br>
+    <label for="">State
+        <input required type="text" [(ngModel)]="newAddressForm.state"  name="state" #state="ngModel"/>
+        <p *ngIf="state.errors && state.touched">
+            <span class="required" *ngIf="state.errors.required">State is required</span>
+        </p>
+    </label><br>
+    <label for="">Zip Code
+            <input required type="text" [(ngModel)]="newAddressForm.zip"  name="zip" #zip="ngModel"/>
+            <p *ngIf="zip.errors && zip.touched">
+                <span class="required" *ngIf="zip.errors.required">Zip Code is required</span>
+            </p>
+        </label><br>
+    <!-- <button [disabled]="registerForm.status === 'INVALID'" type="submit">Register</button> -->
+    <button class="btn-primary" type="submit">Add</button>
+
+</form>

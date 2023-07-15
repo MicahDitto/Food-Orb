@@ -1,0 +1,33 @@
+<h3>Add a Payment</h3>
+<form [formGroup]="newPaymentForm" (ngSubmit)="addPayment()">
+    <label for="">Name
+        <input required type="text"  [(ngModel)]="newPaymentForm.name" name="name"
+         #name="ngModel"/>
+        <p *ngIf="name.errors && name.touched">
+            <span class="required" *ngIf="name.errors.required">Full name is required</span>
+            <span class="required" *ngIf="name.errors.pattern">Please only enter characters</span>
+        </p>
+    </label><br>
+    <label for="">Card Number
+        <input required type="text"  [(ngModel)]="newPaymentForm.card"  
+        name="card" #card="ngModel"/>
+        <p *ngIf="card.errors && card.touched">
+            <span class="required" *ngIf="card.errors.required">Card number is required</span>
+        </p>
+    </label><br>
+    <label for="">CVC
+        <input required type="text"  [(ngModel)]="newPaymentForm.cvc"  name="cvc" #cvc="ngModel" />
+        <p *ngIf="cvc.errors && cvc.touched">
+            <span class="required" *ngIf="cvc.errors.required">CVC is required</span>
+        </p>
+    </label><br>
+    <label for="">Expiration Date
+        <input required type="text" [(ngModel)]="newPaymentForm.date"  name="date" #date="ngModel"/>
+        <p *ngIf="date.errors && date.touched">
+            <span class="required" *ngIf="date.errors.required">Expiration date is required</span>
+        </p>
+    </label><br>
+    <!-- <button [disabled]="registerForm.status === 'INVALID'" type="submit">Register</button> -->
+    <button class="btn-primary" type="submit">Register</button>
+
+</form>

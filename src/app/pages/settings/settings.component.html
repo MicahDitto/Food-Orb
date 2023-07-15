@@ -1,0 +1,46 @@
+<div class="d-flex margin justify-content-center">
+    <div class="side-padding card">
+        <h1 class="card-header side-padding">Settings</h1>
+        <div class=" padding card-body">
+            <h3>Payment Options and Address</h3>
+            <hr>
+            <!-- Payment Settings -->
+            <button class="btn-primary slight-margin" data-toggle="collapse" data-target="#payment">Card
+                Details &#9660;</button><br>
+
+            <div class="collapse" id="payment">
+                <button class=" slight-margin btn-secondary" data-toggle="collapse" data-target="#payments-list">
+                    Payments List &#9660;</button><br>
+                <div class="collapse" id="payments-list">
+                    <foodorb-payments></foodorb-payments>
+                </div>
+                <button class="slight-margin btn-secondary" data-toggle="collapse" data-target="#add-payment">
+                    Add Payment <b>+</b></button>
+
+
+                <div class="collapse" id="add-payment">
+                    <foodorb-add-payment></foodorb-add-payment>
+                </div>
+            </div>
+<br><hr><br>
+            <!-- Address Settingss -->
+            <button class="btn-primary slight-margin" data-toggle="collapse" data-target="#address">Address
+                List &#9660;</button>
+
+            <div class="collapse" id="address">
+                <button class=" slight-margin btn-secondary" data-toggle="collapse" data-target="#address-list">
+                    Address List &#9660;</button><br>
+                <div class="collapse" id="address-list">
+                    <foodorb-address-list></foodorb-address-list>
+                </div>
+                <button class="btn-secondary slight-margin" data-toggle="collapse" data-target="#add-address">
+                    Add Address  <b>+</b></button>
+
+                <div class="collapse" id="add-address">
+                    <foodorb-add-address></foodorb-add-address>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

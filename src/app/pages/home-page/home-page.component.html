@@ -1,0 +1,55 @@
+<!--==== MENU  DROP DOWN =====================================================-->
+
+
+<!--==== Welcome ==========================================================-->
+
+
+
+<div class="d-flex  justify-content-center">
+    <div class="container-fluid margin text-center" style="width: 65%">
+
+        <!--==== Welcome ==========================================================-->
+
+        <h3>Welcome to</h3>
+        <h1 style="font-weight: bold;
+        color: lightseagreen;
+        font-size: 100px;">Food⚫rb</h1>
+        <p>Your food's path to you. </p>
+
+        <!--==== SEARCH BAR ==========================================================-->
+        <div class="search-bar-div">
+            <div class="row">
+                <div class="col">
+                    <input [(ngModel)]="searchValue" class="search-bar" type="text" name="searchVale"
+                        placeholder="Search for foods you love here...">
+                </div>
+
+            </div>
+        </div><br>
+        <hr class="rule">
+    </div>
+</div>
+<!--==== FOODS FROM SEARCH ===================================================-->
+<div class="d-flex justify-content-center">
+    <div class="container-fluid search-results">
+        <div class="row">
+
+            <div class="col-md-4" *ngFor="let item of foodList          | foodSearch : searchValue">
+                <div class="margin card">
+                    <img src="" alt="">
+                    <div class="card-body">
+                        <h3 class="card-header">{{item.foodName | titlecase}}</h3>
+                        <h4>From {{item.restaurant | titlecase}}</h4>
+                        <h4>{{item.price | currency}}</h4>
+                        <p class="">{{item.description}}</p>
+                        <button routerLink="/cart" type=button class="btn-primary" (click)="confirmOrder(item)">
+                            Order</button>
+                        <button type=button class="slight-margin btn-secondary" (click)="confirmCart(item)">
+                            Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

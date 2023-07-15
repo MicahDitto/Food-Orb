@@ -1,0 +1,49 @@
+<div class="d-flex margin justify-content-center">
+    <div class="side-padding card">
+        <h1 class="card-header side-padding">Order Details</h1>
+        <div class=" padding card-body">
+            <h2>Status:</h2>
+            <!-- order.status -->
+            <h2>*Placeholder* Placed</h2>
+            <!-- <p>order.status.description</p> -->
+            <p>*Placeholder* Order has been placed successfully!</p>
+            <h3>Remaining Time:</h3>
+            <p>*Placeholder* 11</p>
+
+            <table class="table">
+                <thead class="thead-dark">
+                    <h2></h2>
+                </thead>
+                <tbody>
+                    <tr class="thead-dark">
+                        <th scope="col">Order ID:</th>
+                        <th scope="col">Restaurant:</th>
+                        <th scope="col">Item Name:</th>
+                        <th scope="col">ID:</th>
+                        <th scope="col">Price:</th>
+                    </tr>
+                    <tr class="data" *ngFor="let item of order; let i = index">
+                        <td>
+                            {{order.id}}
+                        </td>
+                        <td>
+                            <a>{{item.restaurant}}</a>
+                        </td>
+                        <td>
+                            <a>{{item.foodName | titlecase}}</a>
+                        </td>
+                        <td>
+                            <a>{{item.foodID}}</a>
+                        </td>
+                        <td>
+                            <a>{{item.price | currency}} </a>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+            <button class="slight-margin btn-cancel" routerLink="" (click)="confirmCancel()">Cancel Order</button>
+            <button routerLink="" class="btn-secondary" type="">Back to Food</button>
+        </div>
+    </div>
+</div>

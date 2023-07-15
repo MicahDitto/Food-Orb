@@ -1,0 +1,42 @@
+<div class="d-flex margin justify-content-center">
+        <div class="side-padding card">
+            <h1 class="card-header side-padding">Orders</h1>
+            <div class=" padding card-body">
+                <p>Track all your orders here.</p>
+    
+                <table class="table">
+                    <thead class="thead-dark">
+                        <h2></h2>
+                    </thead>
+                    <tbody>
+                        <tr class="thead-dark">
+                            <th scope="col">Restaurant:</th>
+                            <th scope="col">Item Name:</th>
+                            <th scope="col">ID:</th>
+                            <th scope="col">Price:</th>
+                            <th scope="col"></th>
+                        </tr>
+                        <tr class="data" *ngFor="let order of orders; let i = index">
+                             <td>
+                                <a >{{order.restaurant}}</a>
+                            </td>
+                            <td>
+                                <a>{{order.foodName | titlecase}}</a>
+                            </td>
+                            <td>
+                                <a>{{order.foodID}}</a>
+                            </td>
+                            <td>
+                                <a>{{order.price | currency}} </a>
+                            </td>
+                            <td><button routerLink="/orders/:id">View Order</button></td>
+                            
+                        </tr>
+                        
+                    </tbody>
+                </table>
+                
+                <button routerLink="" class="btn-secondary" type="">Home</button>
+            </div>
+        </div>
+    </div>

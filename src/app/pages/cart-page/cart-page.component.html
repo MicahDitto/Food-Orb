@@ -1,0 +1,59 @@
+<div class="d-flex margin justify-content-center">
+        <div class="side-padding card">
+            <h1 class="card-header side-padding">Cart</h1>
+            <div class=" padding card-body">
+    
+                <table class="table">
+                    <thead class="thead-dark">
+                        <h2></h2>
+                    </thead>
+                    <tbody>
+                        <tr class="thead-dark">
+                            <th scope="col">Item Name:</th>
+                            <th scope="col">Restaurant:</th>
+                            <th scope="col">ID:</th>
+                            <th scope="col">Price:</th>
+                            <th scope="col">Food Destination:</th>
+    
+                            <!-- <th scope="col">Action</th> -->
+                        </tr>
+                        <tr appColor class="data" *ngFor="let item of cart; let i = index">
+                            <td>
+                                <a>{{item.foodName | titlecase}}</a>
+                            </td>
+                            <td>
+                                <a >{{item.restaurant}}</a>
+                            </td>
+                            <td>
+                                <a>{{item.foodID}}</a>
+                            </td>
+                            <td>
+                                <a>{{item.price | currency}} </a>
+                            </td>
+                            <td>
+                                {{user.address}}
+                            </td>
+                            
+                            <!-- <td>
+                    <a *ngIf="!showEdit">{{user. | currency}}</a>
+                </td>
+                <td>
+                    <a *ngIf="!showEdit">{{employee.dob | date: 'mediumDate' | uppercase}}</a>
+                </td>
+                <td>
+                    <a *ngIf="!showEdit">{{employee.email}}</a>
+                </td> -->
+                        </tr>
+                        <tr>
+                            <th>Total</th>
+                            <td></td>
+                            <!-- <td>{{cart.total}}</td> -->
+                        </tr>
+                    </tbody>
+                </table>
+                <button routerLink="/orders" class="btn-primary slight-margin" type="submit" onclick="createOrder()">Place Order</button>
+                <button routerLink="" class="btn-secondary" type="">Home</button>
+            </div>
+        </div>
+    </div>
+    
