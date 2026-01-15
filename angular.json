@@ -124,5 +124,8 @@
       }
     }
   },
-  "defaultProject": "foodorb"
+  "defaultProject": "foodorb",
+  "cli": {
+    "analytics": false
+  }
 }
