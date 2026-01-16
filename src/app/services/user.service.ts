@@ -22,7 +22,7 @@ export class UserService {
         this.router.navigateByUrl("");
         return response
       }, () => {
-        this.router.navigateByUrl("/not-authorized");
+        this.router.navigateByUrl("/login");
       })
   }
 
@@ -32,15 +32,13 @@ export class UserService {
         this.router.navigateByUrl("/login");
         return response;
       }, () => {
-        this.router.navigateByUrl("/not-authorized");
+        this.router.navigateByUrl("/login");
       })
   }
 
   logout() {
     this.cart.clearCart()
-    window.sessionStorage.removeItem("access-token");
-    window.sessionStorage.clear();
-    window.localStorage.clear();
+    window.localStorage.removeItem("access-token");
     this.router.navigateByUrl("/login");
   }
 
@@ -49,7 +47,7 @@ export class UserService {
   }
 
   addAddressToUser(model, id) {
-    this.router.navigateByUrl("/api/v1/settings");
+    this.router.navigateByUrl("/settings");
     return this.http.patch("http://localhost:3000/users" + id, {address : model}).subscribe((response : any) => {
     });
   }

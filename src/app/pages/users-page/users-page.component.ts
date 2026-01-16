@@ -1,5 +1,4 @@
 import { Component, OnInit } from "@angular/core";
-import {IUser} from "src/app/interfaces/iuser";
 import users from "data/db.json";
 
 @Component({
@@ -8,12 +7,11 @@ import users from "data/db.json";
   styleUrls: ["./users-page.component.scss"]
 })
 export class UsersPageComponent implements OnInit {
-  users: IUser[] = [];
+  userList = users;
 
   constructor() {
-    userList: users;
     console.log(users);
   }
-  userList = users;
+
   ngOnInit(): void {}
 }

@@ -30,12 +30,4 @@ export class AddAddressComponent implements OnInit {
     this.addressList.push(this.newAddressForm);
     this.user.addAddressToUser(this.addressList, this.userId)
   }
-
-// get name() {
-//   return this.newAddressForm.get("name");
-// }
-//   address: "",
-//     city: "",
-//     state: "",
-//     zip: ""
 }

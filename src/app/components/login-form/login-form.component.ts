@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
-import { HeaderComponent } from '../header/header.component';
 
 @Component({
   selector: 'foodorb-login-form',
@@ -14,16 +13,12 @@ export class LoginFormComponent implements OnInit {
     password: ""
   }
 
-  header: HeaderComponent;
-  constructor(private user: UserService) { }
+  constructor(private user: UserService) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   login() {
     console.log(this.model)
     this.user.login(this.model)
-    // this.header.logIn();
-    }
-
+  }
 }

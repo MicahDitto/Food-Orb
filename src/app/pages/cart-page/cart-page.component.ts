@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import users from "data/db.json";
-import { IFood } from 'src/app/interfaces/ifood';
 import { CartService } from 'src/app/services/cart.service';
 
 @Component({
@@ -10,24 +8,15 @@ import { CartService } from 'src/app/services/cart.service';
 })
 export class CartPageComponent implements OnInit {
 
-cart = this.cartService.getItemsFromCart();
+  cart = this.cartService.getItemsFromCart();
 
-user = {
-  address: "101 Placeholder Rd"
-}
-
-  constructor(
-    private cartService: CartService
-  ) { 
-    userList: users
-  }
-// cart = users.find("id").cart ??
-// user = users.find("id")  ??
-
-  ngOnInit(): void {
+  user = {
+    address: "101 Placeholder Rd"
   }
 
-  createOrder() {
+  constructor(private cartService: CartService) {}
 
-  }
+  ngOnInit(): void {}
+
+  createOrder() {}
 }
