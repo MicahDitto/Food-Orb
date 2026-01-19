@@ -6,6 +6,7 @@ import { tap } from 'rxjs/operators';
 import { CartService } from './cart.service';
 import { StorageService } from './storage.service';
 import { IUser } from '../interfaces/iuser';
+import { environment } from '../../environments/environment';
 
 interface LoginResponse {
   accessToken: string;
@@ -37,7 +38,7 @@ interface Payment {
 })
 export class UserService {
 
-  private apiUrl = 'http://localhost:3000';
+  private apiUrl = environment.apiUrl;
 
   constructor(
     private http: HttpClient,

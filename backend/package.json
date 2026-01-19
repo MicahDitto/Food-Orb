@@ -1,0 +1,16 @@
+{
+  "name": "foodorb-backend",
+  "version": "1.0.0",
+  "description": "Backend API for FoodOrb application",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "json-server": "^0.17.3",
+    "json-server-auth": "^2.1.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

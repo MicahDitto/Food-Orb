@@ -4,13 +4,14 @@ import { Observable } from 'rxjs';
 import { IFood } from "../interfaces/ifood";
 import { IRestaurant } from "../interfaces/irestaurant";
 import { StorageService } from "./storage.service";
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: "root"
 })
 export class CartService {
   private cartKey = 'cart';
-  private apiUrl = "http://localhost:3000";
+  private apiUrl = environment.apiUrl;
 
   constructor(
     private http: HttpClient,
