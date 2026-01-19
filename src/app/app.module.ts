@@ -20,6 +20,7 @@ import { PaymentsComponent } from './components/payments/payments.component';
 import { AddPaymentComponent } from './components/add-payment/add-payment.component';
 import { UsersPageComponent } from './pages/users-page/users-page.component';
 import { CartPageComponent } from './pages/cart-page/cart-page.component';
+import { CheckoutPageComponent } from './pages/checkout-page/checkout-page.component';
 import { OrdersPageComponent } from './pages/orders-page/orders-page.component';
 import { OrderDetailsComponent } from './components/order-details/order-details.component';
 import { CancelOrderComponent } from './components/cancel-order/cancel-order.component';
@@ -43,6 +44,7 @@ import { FoodSearchPipe } from './pipes/food-search.pipe';
     AddPaymentComponent,
     UsersPageComponent,
     CartPageComponent,
+    CheckoutPageComponent,
     OrdersPageComponent,
     OrderDetailsComponent,
     CancelOrderComponent,

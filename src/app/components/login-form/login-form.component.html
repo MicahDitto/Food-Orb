@@ -1,10 +1,10 @@
 <div class="d-flex margin justify-content-center content-center">
-    <!-- <h1>Welcome!</h1> -->
-    <!-- <hr>
-    <h2></h2> -->
     <div class="side-padding card">
         <h3 class="card-header side-padding">Login</h3>
         <div class=" padding card-body">
+            <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+                {{ errorMessage }}
+            </div>
             <form (ngSubmit)="login()" #loginForm="ngForm" display="inline-block text-align">
                 <!--="login(loginForm)"-->
                 <label>
@@ -28,8 +28,8 @@
                 <!-- <button class="btn-primary"  (click)="login()">Login</button> -->
                 <div class="row">
                 <div class="col-s">
-                    <button class="btn-primary slight-margin" [disabled]="loginForm.status === 'INVALID'"
-                  type="submit">Login</button>
+                    <button class="btn-primary slight-margin" [disabled]="loginForm.status === 'INVALID' || isLoading"
+                  type="submit">{{ isLoading ? 'Logging in...' : 'Login' }}</button>
                 </div>
                   <div class="col">
                        <a class="" routerLink="/forgotpassword">Forgot Your Password?</a> <br>

@@ -19,11 +19,18 @@
         <!--==== SEARCH BAR ==========================================================-->
         <div class="search-bar-div">
             <div class="row">
-                <div class="col">
+                <div class="col-md-8">
                     <input [(ngModel)]="searchValue" class="search-bar" type="text" name="searchVale"
-                        placeholder="Search for foods you love here...">
+                        placeholder="Search for foods or restaurants...">
                 </div>
-
+                <div class="col-md-4">
+                    <select [(ngModel)]="selectedRestaurant" (change)="filterByRestaurant()" class="form-select">
+                        <option value="">All Restaurants</option>
+                        <option *ngFor="let restaurant of restaurants" [value]="restaurant.name">
+                            {{ restaurant.name }}
+                        </option>
+                    </select>
+                </div>
             </div>
         </div><br>
         <hr class="rule">
@@ -34,17 +41,19 @@
     <div class="container-fluid search-results">
         <div class="row">
 
-            <div class="col-md-4" *ngFor="let item of foodList          | foodSearch : searchValue">
+            <div class="col-md-4" *ngFor="let item of foodList | foodSearch : searchValue">
                 <div class="margin card">
-                    <img src="" alt="">
+                    <img [src]="item.imageUrl"
+                         alt="{{item.foodName}}"
+                         class="card-img-top"
+                         style="height: 180px; object-fit: cover;"
+                         (error)="onImageError($event)">
                     <div class="card-body">
                         <h3 class="card-header">{{item.foodName | titlecase}}</h3>
                         <h4>From {{item.restaurant | titlecase}}</h4>
                         <h4>{{item.price | currency}}</h4>
                         <p class="">{{item.description}}</p>
-                        <button routerLink="/cart" type=button class="btn-primary" (click)="confirmOrder(item)">
-                            Order</button>
-                        <button type=button class="slight-margin btn-secondary" (click)="confirmCart(item)">
+                        <button type="button" class="slight-margin btn-primary" (click)="confirmCart(item)">
                             Add to Cart</button>
                     </div>
                 </div>

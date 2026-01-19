@@ -19,6 +19,72 @@
       "id": 2
     }
   ],
+  "restaurants": [
+    {
+      "id": 1,
+      "name": "McDonalds",
+      "description": "Famous fast food chain serving burgers, fries, and more",
+      "imageUrl": "https://placehold.co/300x200/FFCC00/000000?text=McDonalds",
+      "cuisine": "Fast Food",
+      "rating": 4.2
+    },
+    {
+      "id": 2,
+      "name": "Spartan",
+      "description": "Authentic Greek cuisine with fresh ingredients",
+      "imageUrl": "https://placehold.co/300x200/0066CC/FFFFFF?text=Spartan",
+      "cuisine": "Greek",
+      "rating": 4.5
+    },
+    {
+      "id": 3,
+      "name": "Mod-Pizza",
+      "description": "Custom artisan-style pizzas made to order",
+      "imageUrl": "https://placehold.co/300x200/CC0000/FFFFFF?text=ModPizza",
+      "cuisine": "Italian",
+      "rating": 4.3
+    },
+    {
+      "id": 4,
+      "name": "Popeyes",
+      "description": "Louisiana-style fried chicken and Cajun cuisine",
+      "imageUrl": "https://placehold.co/300x200/FF6600/FFFFFF?text=Popeyes",
+      "cuisine": "Cajun",
+      "rating": 4.4
+    },
+    {
+      "id": 5,
+      "name": "Arby's",
+      "description": "Famous for roast beef sandwiches and curly fries",
+      "imageUrl": "https://placehold.co/300x200/CC0033/FFFFFF?text=Arbys",
+      "cuisine": "Fast Food",
+      "rating": 3.9
+    },
+    {
+      "id": 6,
+      "name": "Chickfila",
+      "description": "Premium chicken sandwiches and waffle fries",
+      "imageUrl": "https://placehold.co/300x200/CC0000/FFFFFF?text=Chickfila",
+      "cuisine": "Fast Food",
+      "rating": 4.7
+    },
+    {
+      "id": 7,
+      "name": "Taco Bell",
+      "description": "Mexican-inspired fast food with bold flavors",
+      "imageUrl": "https://placehold.co/300x200/6600CC/FFFFFF?text=TacoBell",
+      "cuisine": "Mexican",
+      "rating": 4
+    },
+    {
+      "id": 8,
+      "name": "Chipotle",
+      "description": "Fresh Mexican grill with customizable burritos and bowls",
+      "imageUrl": "https://placehold.co/300x200/8B4513/FFFFFF?text=Chipotle",
+      "cuisine": "Mexican",
+      "rating": 4.5
+    }
+  ],
   "users": [
     {
       "email": "micah@tcs.com",
@@ -26,22 +92,21 @@
       "name": "Micah Dittmar",
       "address": [
         {
-          "name": "",
-          "address": "new york"
+          "name": "Home",
+          "address": "123 Main St",
+          "city": "New York",
+          "state": "NY",
+          "zip": "10001"
         }
       ],
       "payments": [
         {
-          "number": "456745457565457465",
-          "name": "visa"
+          "name": "Visa",
+          "card": "************4567",
+          "date": "12/25"
         }
       ],
-      "cart": [
-        {
-          "foodID": "1",
-          "name": "chicken"
-        }
-      ],
+      "cart": [],
       "id": 1
     },
     {
@@ -50,14 +115,18 @@
       "name": "praveen",
       "address": [
         {
-          "name": "",
-          "address": "new york"
+          "name": "Home",
+          "address": "456 Oak Ave",
+          "city": "Los Angeles",
+          "state": "CA",
+          "zip": "90001"
         }
       ],
       "payments": [
         {
-          "number": "456745457565457465",
-          "name": "visa"
+          "name": "Mastercard",
+          "card": "************5678",
+          "date": "06/26"
         }
       ],
       "id": 2
@@ -68,92 +137,175 @@
       "fullName": "Kyle",
       "confirmPassword": "password",
       "id": 3
+    },
+    {
+      "email": "m@gmail.com",
+      "password": "$2a$10$M1AhAn3TGd7eRewXICD4i.VRrl/nzxodvW0OFIlFHjIZQvxzErDTq",
+      "fullName": "Micah",
+      "confirmPassword": "FoodOrb$#34Security",
+      "id": 4
     }
   ],
   "foods": [
     {
       "foodID": 1,
-      "foodName": "chicken",
+      "foodName": "Chicken Nuggets",
       "restaurant": "McDonalds",
-      "description": "Large juicy chicken nuggets breaded or battered, then deep-fried or baked.",
-      "price": 8.11
+      "restaurantId": 1,
+      "description": "Crispy, golden chicken nuggets served with your choice of dipping sauce.",
+      "price": 8.11,
+      "imageUrl": "https://placehold.co/300x200/FFCC00/000000?text=Nuggets",
+      "category": "Chicken"
     },
     {
       "foodID": 2,
-      "foodName": "burger",
+      "foodName": "Big Mac",
       "restaurant": "McDonalds",
-      "description": "One or more cooked patties of ground meat, usually beef, placed inside a sliced bread roll or bun",
-      "price": 5.99
+      "restaurantId": 1,
+      "description": "Two beef patties, special sauce, lettuce, cheese, pickles, onions on a sesame seed bun.",
+      "price": 5.99,
+      "imageUrl": "https://placehold.co/300x200/FFCC00/000000?text=BigMac",
+      "category": "Burgers"
     },
     {
       "foodID": 3,
-      "foodName": "salad",
+      "foodName": "Garden Salad",
       "restaurant": "McDonalds",
-      "description": "Bean salad, tuna salad, fattoush, Greek salad (vegetable-based, but without leafy greens), and sōmen salad (a noodle-based salad).",
-      "price": 4.99
+      "restaurantId": 1,
+      "description": "Fresh mixed greens with tomatoes, carrots, and your choice of dressing.",
+      "price": 4.99,
+      "imageUrl": "https://placehold.co/300x200/228B22/FFFFFF?text=Salad",
+      "category": "Salads"
     },
     {
       "foodID": 4,
-      "foodName": "milkshake",
+      "foodName": "Vanilla Milkshake",
       "restaurant": "McDonalds",
-      "description": "Coming in a variety of different flavors, this dairy drink is sure to delight.",
-      "price": 3.99
+      "restaurantId": 1,
+      "description": "Creamy vanilla milkshake made with real ice cream.",
+      "price": 3.99,
+      "imageUrl": "https://placehold.co/300x200/F5F5DC/000000?text=Shake",
+      "category": "Drinks"
     },
     {
       "foodID": 5,
-      "foodName": "gyros",
+      "foodName": "Chicken Gyro",
       "restaurant": "Spartan",
-      "description": "Greek cooked chicken, rice, and vegetables on a soft peta bread, topped with special sauces.",
-      "price": 9.55
+      "restaurantId": 2,
+      "description": "Seasoned chicken with tzatziki sauce, tomatoes, and onions in warm pita bread.",
+      "price": 9.55,
+      "imageUrl": "https://placehold.co/300x200/0066CC/FFFFFF?text=Gyro",
+      "category": "Greek"
     },
     {
       "foodID": 6,
-      "foodName": "pizza",
+      "foodName": "Pepperoni Pizza",
       "restaurant": "Mod-Pizza",
-      "description": "Buffalo Chicken, Peparonni, Hawaiian, Supreme, Meat-lovers...",
-      "price": 10
+      "restaurantId": 3,
+      "description": "Classic pizza topped with pepperoni and mozzarella cheese.",
+      "price": 10,
+      "imageUrl": "https://placehold.co/300x200/CC0000/FFFFFF?text=Pizza",
+      "category": "Pizza"
     },
     {
       "foodID": 7,
-      "foodName": "sub",
+      "foodName": "Italian Sub",
       "restaurant": "McDonalds",
-      "description": "Meat, cheese, veggies, toppings, on your choice of a variety of different breads.",
-      "price": 10.55
+      "restaurantId": 1,
+      "description": "Ham, salami, pepperoni with lettuce, tomato, and Italian dressing.",
+      "price": 10.55,
+      "imageUrl": "https://placehold.co/300x200/FFCC00/000000?text=Sub",
+      "category": "Sandwiches"
     },
     {
       "foodID": 8,
-      "foodName": "chicken",
+      "foodName": "Spicy Chicken",
       "restaurant": "Popeyes",
-      "description": "Large juicy chicken nuggets breaded or battered, then deep-fried or baked.",
-      "price": 90.1
+      "restaurantId": 4,
+      "description": "Louisiana-style spicy fried chicken, crispy and flavorful.",
+      "price": 12.99,
+      "imageUrl": "https://placehold.co/300x200/FF6600/FFFFFF?text=SpicyChicken",
+      "category": "Chicken"
     },
     {
       "foodID": 9,
-      "foodName": "chicken snadwich",
+      "foodName": "Roast Beef Sandwich",
       "restaurant": "Arby's",
-      "description": "Large juicy chicken sandwich breaded or battered, then deep-fried or baked. Comes with Pickles.",
-      "price": 10
+      "restaurantId": 5,
+      "description": "Thinly sliced roast beef piled high on a toasted sesame seed bun.",
+      "price": 8.99,
+      "imageUrl": "https://placehold.co/300x200/CC0033/FFFFFF?text=RoastBeef",
+      "category": "Sandwiches"
     },
     {
       "foodID": 10,
-      "foodName": "Chicken Sandwich",
+      "foodName": "Original Chicken Sandwich",
       "restaurant": "Chickfila",
-      "description": "Large juicy chicken nuggets breaded or battered, then deep-fried or baked.",
-      "price": 10
+      "restaurantId": 6,
+      "description": "Boneless breast of chicken seasoned and pressure-cooked in peanut oil.",
+      "price": 10,
+      "imageUrl": "https://placehold.co/300x200/CC0000/FFFFFF?text=ChickenSandwich",
+      "category": "Chicken"
     },
     {
       "foodID": 11,
-      "foodName": "Quesorito",
+      "foodName": "Quesarito",
       "restaurant": "Taco Bell",
-      "description": "Large juicy chicken nuggets breaded or battered, then deep-fried or baked.",
-      "price": 10
+      "restaurantId": 7,
+      "description": "Seasoned beef and rice wrapped in a cheese quesadilla shell.",
+      "price": 7.99,
+      "imageUrl": "https://placehold.co/300x200/6600CC/FFFFFF?text=Quesarito",
+      "category": "Mexican"
     },
     {
       "foodID": 12,
-      "foodName": "Burrito",
+      "foodName": "Chicken Burrito",
       "restaurant": "Chipotle",
-      "description": "Large juicy chicken nuggets breaded or battered, then deep-fried or baked.",
-      "price": 10
+      "restaurantId": 8,
+      "description": "Flour tortilla filled with chicken, rice, beans, salsa, and guacamole.",
+      "price": 11.5,
+      "imageUrl": "https://placehold.co/300x200/8B4513/FFFFFF?text=Burrito",
+      "category": "Mexican"
+    },
+    {
+      "foodID": 13,
+      "foodName": "Greek Salad",
+      "restaurant": "Spartan",
+      "restaurantId": 2,
+      "description": "Fresh romaine, feta cheese, olives, and cucumber with Greek dressing.",
+      "price": 8.49,
+      "imageUrl": "https://placehold.co/300x200/0066CC/FFFFFF?text=GreekSalad",
+      "category": "Salads"
+    },
+    {
+      "foodID": 14,
+      "foodName": "Margherita Pizza",
+      "restaurant": "Mod-Pizza",
+      "restaurantId": 3,
+      "description": "Fresh mozzarella, tomatoes, and basil on a classic crust.",
+      "price": 9.5,
+      "imageUrl": "https://placehold.co/300x200/CC0000/FFFFFF?text=Margherita",
+      "category": "Pizza"
+    },
+    {
+      "foodID": 15,
+      "foodName": "Waffle Fries",
+      "restaurant": "Chickfila",
+      "restaurantId": 6,
+      "description": "Crispy waffle-cut potatoes cooked in canola oil.",
+      "price": 3.49,
+      "imageUrl": "https://placehold.co/300x200/DAA520/000000?text=WaffleFries",
+      "category": "Sides"
+    },
+    {
+      "foodID": 16,
+      "foodName": "Burrito Bowl",
+      "restaurant": "Chipotle",
+      "restaurantId": 8,
+      "description": "All the burrito goodness in a bowl - no tortilla. Rice, beans, protein, and toppings.",
+      "price": 10.99,
+      "imageUrl": "https://placehold.co/300x200/8B4513/FFFFFF?text=BurritoBowl",
+      "category": "Mexican"
     }
   ]
 }

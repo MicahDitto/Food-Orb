@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { IFood } from 'src/app/interfaces/ifood';
+import { IRestaurant } from 'src/app/interfaces/irestaurant';
 import { CartService } from 'src/app/services/cart.service';
 
 @Component({
@@ -9,31 +11,49 @@ import { CartService } from 'src/app/services/cart.service';
 })
 export class HomePageComponent implements OnInit {
 
-  searchValue = "";
-  foodList: IFood[] = []
-  
+  searchValue = '';
+  foodList: IFood[] = [];
+  allFoods: IFood[] = [];
+  restaurants: IRestaurant[] = [];
+  selectedRestaurant = '';
 
-  constructor(private cartService: CartService) { }
+  constructor(
+    private cartService: CartService,
+    private router: Router
+  ) {}
 
-  confirmCart(item) { //IFood
-    if(confirm("Confirm add "+item.restaurant+" "+item.foodName+ " to cart?")) {
-      this.addToCart(item)
-    }
-  }
-  confirmOrder(item) { //IFood
-    if(confirm("Confirm purchase: \n\n Item: "+item.restaurant+" "+item.foodName+ "\n Card: default \n Address: default \n\n Do you wish to proceed?")) {
-      console.log("Implement add to cart functionality here");
-    }
-  }
-  addToCart(product) {
-    this.cartService.addToCart(product);
-    window.alert('Your product has been added to the cart!');
-  }
-  
   ngOnInit(): void {
-    this.cartService.getFoods().subscribe((response: any) => 
-    this.foodList = response)
-    console.log(this.foodList);
+    this.cartService.getFoods().subscribe((foods: IFood[]) => {
+      this.allFoods = foods;
+      this.foodList = foods;
+    });
+
+    this.cartService.getRestaurants().subscribe((restaurants: IRestaurant[]) => {
+      this.restaurants = restaurants;
+    });
   }
 
+  filterByRestaurant(): void {
+    if (this.selectedRestaurant === '') {
+      this.foodList = this.allFoods;
+    } else {
+      this.foodList = this.allFoods.filter(food => food.restaurant === this.selectedRestaurant);
+    }
+  }
+
+  confirmCart(item: IFood): void {
+    if (confirm(`Confirm add ${item.restaurant} ${item.foodName} to cart?`)) {
+      this.addToCart(item);
+    }
+  }
+
+  addToCart(product: IFood): void {
+    this.cartService.addToCart(product);
+    alert('Your product has been added to the cart!');
+  }
+
+  onImageError(event: Event): void {
+    const img = event.target as HTMLImageElement;
+    img.src = 'https://placehold.co/300x200/CCCCCC/333333?text=No+Image';
+  }
 }

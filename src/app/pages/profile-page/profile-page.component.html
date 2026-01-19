@@ -1,73 +1,126 @@
-<div class="d-flex justify-content-center">
-    <div class="container-fluid search-results">
-        <div class="margin card">
-            <h1 class="margin text-center">User Page</h1>
-            <div class="container-fluid">
-                <hr class="rule">
-            </div>
-
-            <img src="src/assets/images/user-placeholder.jpeg" alt="">
-            <div class="card-body">
-
-                <table class="table">
-                    <thead class="thead-dark">
-                        <h2>Details</h2>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th class="thead-dark" scope="row">User ID:</th>
-                            <td>
-                                <!-- <a ngIf="!showEdit">{{user.userID}}</a> -->
-                            </td>
-            
-                            <!-- <th scope="col">Action</th> -->
-                        </tr>
-                        <tr>
-                                <th class="thead-dark" scope="row">Name:</th>
-                                
-                        </tr>
-                        <tr>
-                                <th class="thead-dark" scope="row">Email:</th>
-                                
-                        </tr>
-                        <tr>
-                            <th class="thead-dark" scope="row">Phone:</th>
-
-                        </tr>
-                        <!-- <tr appColor class="data" *ngFor="let employee of employees; let i = index">
-                            
-                            <td>
-                                <a *ngIf="!showEdit">{{employee.firstName}}</a>
-                            </td>
-                            <td>
-                                <a *ngIf="!showEdit">{{employee.lastName}}</a>
-                            </td>
-                            <td>
-                                <a *ngIf="!showEdit">{{employee.salary | currency}}</a>
-                            </td>
-                            <td>
-                                <a *ngIf="!showEdit">{{employee.dob | date: 'mediumDate' | uppercase}}</a>
-                            </td>
-                            <td>
-                                <a *ngIf="!showEdit">{{employee.email}}</a>
-                            </td>
-                            <button *ngIf="!showEdit" (click)="EditEmp(i)">Edit</button>
-                        </tr> -->
-                        <!-- <tr class="edit" *ngFor="let employee of employees; let i = index">
-                                    <td><input *ngIf="showEdit" type="text" [(ngModel)]="employee.employeeID"/></td>
-                                    <td><input *ngIf="showEdit" type="text" [(ngModel)]="employee.firstName"/></td>
-                                    <td><input *ngIf="showEdit" type="text" [(ngModel)]="employee.lastName"/></td>
-                                    <td><input *ngIf="showEdit" type="text" [(ngModel)]="employee.salary"/></td>
-                                    <td><input *ngIf="showEdit" type="text" [(ngModel)]="employee.dob"/></td>
-                                    <td><input *ngIf="showEdit" type="text" [(ngModel)]="employee.email"/></td>
-                                    <button *ngIf="showEdit" (click)="UpdateEmp()">Update</button>
-                                </tr> -->
-
-                    </tbody>
-                </table>
-                <a routerLink="/settings">Edit Address</a>
-
+<div class="container margin">
+    <!-- Profile Header -->
+    <div class="profile-header card">
+        <div class="profile-avatar">
+            <div class="avatar-circle">
+                {{ profile?.name?.charAt(0)?.toUpperCase() || profile?.email?.charAt(0)?.toUpperCase() || '?' }}
             </div>
         </div>
+        <div class="profile-info">
+            <h1>{{ profile?.name || 'Welcome!' }}</h1>
+            <p class="email">{{ profile?.email || 'No email set' }}</p>
+            <p *ngIf="profile?.phone" class="phone">{{ profile.phone }}</p>
+            <button class="btn-primary" (click)="goToSettings()">Edit Profile</button>
+        </div>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="stats-row">
+        <div class="stat-card">
+            <div class="stat-number">{{ stats.addressCount }}</div>
+            <div class="stat-label">Saved Addresses</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">{{ stats.paymentCount }}</div>
+            <div class="stat-label">Payment Methods</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">{{ stats.orderCount }}</div>
+            <div class="stat-label">Total Orders</div>
+        </div>
+    </div>
+
+    <div class="profile-content">
+        <!-- Addresses Section -->
+        <div class="section-card card">
+            <div class="section-header">
+                <h3>Saved Addresses</h3>
+                <button class="btn-secondary btn-sm" (click)="goToSettings()">Manage</button>
+            </div>
+            <div class="section-body">
+                <div *ngIf="addresses.length === 0" class="empty-state">
+                    <p>No saved addresses</p>
+                    <button class="btn-primary btn-sm" (click)="goToSettings()">Add Address</button>
+                </div>
+                <div class="item-list" *ngIf="addresses.length > 0">
+                    <div class="item" *ngFor="let addr of addresses; let i = index" [class.first]="i === 0">
+                        <strong>{{ addr.name }}</strong>
+                        <span *ngIf="i === 0" class="default-badge">Default</span>
+                        <p>{{ formatAddress(addr) }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Payments Section -->
+        <div class="section-card card">
+            <div class="section-header">
+                <h3>Payment Methods</h3>
+                <button class="btn-secondary btn-sm" (click)="goToSettings()">Manage</button>
+            </div>
+            <div class="section-body">
+                <div *ngIf="payments.length === 0" class="empty-state">
+                    <p>No saved payment methods</p>
+                    <button class="btn-primary btn-sm" (click)="goToSettings()">Add Payment</button>
+                </div>
+                <div class="item-list" *ngIf="payments.length > 0">
+                    <div class="item" *ngFor="let payment of payments; let i = index" [class.first]="i === 0">
+                        <strong>{{ payment.name }}</strong>
+                        <span *ngIf="i === 0" class="default-badge">Default</span>
+                        <p>Card: {{ payment.card }} | Exp: {{ payment.date }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Orders Section -->
+    <div class="section-card card full-width">
+        <div class="section-header">
+            <h3>Recent Orders</h3>
+            <button class="btn-secondary btn-sm" (click)="goToOrders()">View All</button>
+        </div>
+        <div class="section-body">
+            <div *ngIf="recentOrders.length === 0" class="empty-state">
+                <p>No orders yet</p>
+                <button class="btn-primary btn-sm" routerLink="/">Start Shopping</button>
+            </div>
+            <table class="table" *ngIf="recentOrders.length > 0">
+                <thead>
+                    <tr>
+                        <th>Order #</th>
+                        <th>Items</th>
+                        <th>Total</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let order of recentOrders">
+                        <td>{{ order.id }}</td>
+                        <td>
+                            <span *ngFor="let item of order.items; let last = last">
+                                {{ item.foodName | titlecase }}<span *ngIf="!last">, </span>
+                            </span>
+                        </td>
+                        <td>{{ order.total | currency }}</td>
+                        <td>
+                            <span [class]="getStatusClass(order.status)">
+                                {{ order.status | titlecase }}
+                            </span>
+                        </td>
+                        <td>
+                            <button class="btn-secondary btn-sm" [routerLink]="['/orders', order.id]">View</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="action-buttons">
+        <button routerLink="/" class="btn-secondary">Back to Home</button>
+        <button routerLink="/settings" class="btn-primary">Account Settings</button>
     </div>
 </div>

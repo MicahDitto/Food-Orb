@@ -160,16 +160,46 @@ Options:
 |-------|--------|-------|
 | Phase 1: Critical Bugs | Complete | Fixed storage, route navigation, auth redirects |
 | Phase 2: Code Quality | Complete | Removed dead code, unused imports, fixed constructors |
-| Phase 3: Architecture | Not Started | |
-| Phase 4: Functionality | Not Started | |
-| Phase 5: Memory Leaks | Not Started | |
-| Phase 6: Routing | Not Started | |
-| Phase 7: Tooling | Not Started | Optional |
+| Phase 3: Architecture | Complete | Fixed subscriptions, added types, created StorageService |
+| Phase 4: Functionality | Complete | Implemented OrderService, stub methods, address/payment components |
+| Phase 5: Memory Leaks | **POSTPONED** | On hold until UI work complete |
+| Phase 6: Routing | **POSTPONED** | On hold until UI work complete |
+| Phase 7: Tooling | **POSTPONED** | Optional - on hold until UI work complete |
+
+---
+
+## UI & Functionality Work (Current Priority)
+
+**Status:** In Progress
+
+The following UI/functionality work takes priority over remaining cleanup phases:
+
+### Authentication
+- [ ] Fix Login functionality
+- [ ] Fix Register functionality
+
+### Core User Flow
+The app should support this flow:
+1. **Search/Browse** - User searches for food they want on home page
+2. **Pick Restaurant** - User selects from restaurant options offering that food
+3. **Order from Menu** - User browses restaurant menu and adds items to cart
+4. **Checkout** - User proceeds to checkout
+5. **Payment** - User selects or adds a payment method
+6. **Confirm Order** - User confirms and places the order
+
+### Specific Pages to Fix
+- [ ] Home/Search page - needs working search functionality
+- [ ] Orders page - currently non-functional
+
+### Mock Data Needed
+- [ ] Food items with variety of options
+- [ ] Placeholder images for food items
+- [ ] Restaurant data
 
 ---
 
 ## Notes
 
-- Each phase should be completed and tested before moving to the next
+- **UI work takes priority** - Resume cleanup phases (5, 6, 7) after UI is complete
 - Run `npm run lint` and `npm test` after each phase
 - Commit after completing each phase

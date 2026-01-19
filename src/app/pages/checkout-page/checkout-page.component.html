@@ -1,0 +1,137 @@
+<div class="container margin">
+    <div class="row">
+        <!-- Order Summary -->
+        <div class="col-md-6">
+            <div class="card">
+                <h3 class="card-header">Order Summary</h3>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Item</th>
+                                <th>Restaurant</th>
+                                <th>Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of cart">
+                                <td>{{ item.foodName | titlecase }}</td>
+                                <td>{{ item.restaurant }}</td>
+                                <td>{{ item.price | currency }}</td>
+                            </tr>
+                            <tr class="table-active">
+                                <td><strong>Total</strong></td>
+                                <td></td>
+                                <td><strong>{{ getTotal() | currency }}</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Address & Payment Selection -->
+        <div class="col-md-6">
+            <!-- Address Selection -->
+            <div class="card margin-bottom">
+                <h3 class="card-header">Delivery Address</h3>
+                <div class="card-body">
+                    <div *ngIf="addresses.length === 0 && !showAddAddress" class="text-muted">
+                        No saved addresses. Add one below.
+                    </div>
+
+                    <div class="list-group" *ngIf="addresses.length > 0">
+                        <button *ngFor="let addr of addresses"
+                                type="button"
+                                class="list-group-item list-group-item-action"
+                                [class.active]="selectedAddress === addr"
+                                (click)="selectAddress(addr)">
+                            <strong>{{ addr.name }}</strong><br>
+                            {{ addr.address }}<br>
+                            {{ addr.city }}, {{ addr.state }} {{ addr.zip }}
+                        </button>
+                    </div>
+
+                    <button class="btn-secondary slight-margin" (click)="toggleAddAddress()">
+                        {{ showAddAddress ? 'Cancel' : '+ Add New Address' }}
+                    </button>
+
+                    <div *ngIf="showAddAddress" class="margin-top">
+                        <div class="form-group">
+                            <input type="text" class="form-control margin-bottom" placeholder="Address Name (e.g., Home, Work)"
+                                   [(ngModel)]="newAddress.name">
+                            <input type="text" class="form-control margin-bottom" placeholder="Street Address"
+                                   [(ngModel)]="newAddress.address">
+                            <div class="row">
+                                <div class="col">
+                                    <input type="text" class="form-control margin-bottom" placeholder="City"
+                                           [(ngModel)]="newAddress.city">
+                                </div>
+                                <div class="col">
+                                    <input type="text" class="form-control margin-bottom" placeholder="State"
+                                           [(ngModel)]="newAddress.state">
+                                </div>
+                                <div class="col">
+                                    <input type="text" class="form-control margin-bottom" placeholder="ZIP"
+                                           [(ngModel)]="newAddress.zip">
+                                </div>
+                            </div>
+                            <button class="btn-primary" (click)="addNewAddress()">Save Address</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Payment Selection -->
+            <div class="card">
+                <h3 class="card-header">Payment Method</h3>
+                <div class="card-body">
+                    <div *ngIf="payments.length === 0 && !showAddPayment" class="text-muted">
+                        No saved payment methods. Add one below.
+                    </div>
+
+                    <div class="list-group" *ngIf="payments.length > 0">
+                        <button *ngFor="let pay of payments"
+                                type="button"
+                                class="list-group-item list-group-item-action"
+                                [class.active]="selectedPayment === pay"
+                                (click)="selectPayment(pay)">
+                            <strong>{{ pay.name }}</strong><br>
+                            Card: {{ pay.card }}<br>
+                            Expires: {{ pay.date }}
+                        </button>
+                    </div>
+
+                    <button class="btn-secondary slight-margin" (click)="toggleAddPayment()">
+                        {{ showAddPayment ? 'Cancel' : '+ Add New Payment' }}
+                    </button>
+
+                    <div *ngIf="showAddPayment" class="margin-top">
+                        <div class="form-group">
+                            <input type="text" class="form-control margin-bottom" placeholder="Card Name (e.g., Visa, Mastercard)"
+                                   [(ngModel)]="newPayment.name">
+                            <input type="text" class="form-control margin-bottom" placeholder="Card Number"
+                                   [(ngModel)]="newPayment.card">
+                            <input type="text" class="form-control margin-bottom" placeholder="Expiry Date (MM/YY)"
+                                   [(ngModel)]="newPayment.date">
+                            <button class="btn-primary" (click)="addNewPayment()">Save Payment</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Place Order Button -->
+    <div class="row margin-top">
+        <div class="col text-center">
+            <button class="btn-primary btn-lg"
+                    [disabled]="!canPlaceOrder() || isLoading"
+                    (click)="placeOrder()">
+                {{ isLoading ? 'Processing...' : 'Place Order - ' + (getTotal() | currency) }}
+            </button>
+            <br><br>
+            <button routerLink="/cart" class="btn-secondary">Back to Cart</button>
+        </div>
+    </div>
+</div>

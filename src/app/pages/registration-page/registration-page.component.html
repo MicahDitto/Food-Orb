@@ -2,8 +2,13 @@
     <div class="side-padding card">
         <h3 class="card-header side-padding">Register</h3>
         <div class=" padding card-body">
+            <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+                {{ errorMessage }}
+            </div>
+            <div *ngIf="successMessage" class="alert alert-success" role="alert">
+                {{ successMessage }}
+            </div>
             <form (ngSubmit)="register()" #registerForm="ngForm" display="inline-block text-align">
-                <!--="login(loginForm)"-->
                 <label>
 
                     Name
@@ -45,8 +50,11 @@
                     </div>
                 </label> <br>
                     <div class="col-s">
-                        <button class="btn-primary slight-margin" [disabled]="registerForm.status === 'INVALID'"
-                            type="submit">Register</button>
+                        <button class="btn-primary slight-margin" [disabled]="registerForm.status === 'INVALID' || isLoading"
+                            type="submit">{{ isLoading ? 'Registering...' : 'Register' }}</button>
+                    </div>
+                    <div class="col">
+                        <a routerLink="/login">Already have an account?</a>
                     </div>
                     
 

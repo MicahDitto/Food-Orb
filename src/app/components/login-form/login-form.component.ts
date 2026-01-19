@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -13,12 +14,33 @@ export class LoginFormComponent implements OnInit {
     password: ""
   }
 
-  constructor(private user: UserService) {}
+  errorMessage = '';
+  isLoading = false;
+
+  constructor(
+    private user: UserService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {}
 
   login() {
-    console.log(this.model)
-    this.user.login(this.model)
+    this.errorMessage = '';
+    this.isLoading = true;
+
+    this.user.login(this.model).subscribe({
+      next: () => {
+        this.isLoading = false;
+        this.router.navigateByUrl('');
+      },
+      error: (err) => {
+        this.isLoading = false;
+        if (err.status === 400) {
+          this.errorMessage = 'Invalid email or password. Please try again.';
+        } else {
+          this.errorMessage = 'Login failed. Please try again later.';
+        }
+      }
+    });
   }
 }

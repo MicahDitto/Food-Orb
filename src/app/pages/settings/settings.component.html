@@ -1,46 +1,178 @@
-<div class="d-flex margin justify-content-center">
-    <div class="side-padding card">
-        <h1 class="card-header side-padding">Settings</h1>
-        <div class=" padding card-body">
-            <h3>Payment Options and Address</h3>
-            <hr>
-            <!-- Payment Settings -->
-            <button class="btn-primary slight-margin" data-toggle="collapse" data-target="#payment">Card
-                Details &#9660;</button><br>
+<div class="container margin">
+    <div class="card settings-card">
+        <h1 class="card-header">Settings</h1>
+        <div class="card-body">
 
-            <div class="collapse" id="payment">
-                <button class=" slight-margin btn-secondary" data-toggle="collapse" data-target="#payments-list">
-                    Payments List &#9660;</button><br>
-                <div class="collapse" id="payments-list">
-                    <foodorb-payments></foodorb-payments>
+            <!-- Tab Navigation -->
+            <div class="tab-nav">
+                <button class="tab-btn" [class.active]="activeTab === 'profile'" (click)="setActiveTab('profile')">
+                    Profile
+                </button>
+                <button class="tab-btn" [class.active]="activeTab === 'addresses'" (click)="setActiveTab('addresses')">
+                    Addresses ({{ addresses.length }})
+                </button>
+                <button class="tab-btn" [class.active]="activeTab === 'payments'" (click)="setActiveTab('payments')">
+                    Payment Methods ({{ payments.length }})
+                </button>
+            </div>
+
+            <!-- Profile Tab -->
+            <div class="tab-content" *ngIf="activeTab === 'profile'">
+                <h3>Your Profile</h3>
+                <p class="subtitle">Manage your personal information</p>
+
+                <div *ngIf="profileMessage" class="alert" [class.alert-success]="profileMessageType === 'success'" [class.alert-danger]="profileMessageType === 'error'">
+                    {{ profileMessage }}
                 </div>
-                <button class="slight-margin btn-secondary" data-toggle="collapse" data-target="#add-payment">
-                    Add Payment <b>+</b></button>
 
+                <form (ngSubmit)="saveProfile()" #profileForm="ngForm">
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" class="form-control" [(ngModel)]="profile.name" name="name" required placeholder="Enter your full name">
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" class="form-control" [(ngModel)]="profile.email" name="email" required placeholder="Enter your email">
+                    </div>
+                    <div class="form-group">
+                        <label>Phone Number</label>
+                        <input type="tel" class="form-control" [(ngModel)]="profile.phone" name="phone" placeholder="Enter your phone number">
+                    </div>
+                    <button type="submit" class="btn-primary">Save Profile</button>
+                </form>
+            </div>
 
-                <div class="collapse" id="add-payment">
-                    <foodorb-add-payment></foodorb-add-payment>
+            <!-- Addresses Tab -->
+            <div class="tab-content" *ngIf="activeTab === 'addresses'">
+                <div class="section-header">
+                    <div>
+                        <h3>Delivery Addresses</h3>
+                        <p class="subtitle">Manage your saved delivery addresses</p>
+                    </div>
+                    <button class="btn-primary" (click)="toggleAddAddress()" *ngIf="!showAddAddress">
+                        + Add Address
+                    </button>
+                </div>
+
+                <!-- Add/Edit Address Form -->
+                <div class="add-form" *ngIf="showAddAddress">
+                    <h4>{{ editingAddressIndex !== null ? 'Edit Address' : 'Add New Address' }}</h4>
+                    <form (ngSubmit)="saveAddress()" #addressForm="ngForm">
+                        <div class="form-group">
+                            <label>Address Label</label>
+                            <input type="text" class="form-control" [(ngModel)]="newAddress.name" name="addressName" required placeholder="e.g., Home, Work, etc.">
+                        </div>
+                        <div class="form-group">
+                            <label>Street Address</label>
+                            <input type="text" class="form-control" [(ngModel)]="newAddress.address" name="street" required placeholder="123 Main St">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col">
+                                <label>City</label>
+                                <input type="text" class="form-control" [(ngModel)]="newAddress.city" name="city" required placeholder="City">
+                            </div>
+                            <div class="form-group col-sm">
+                                <label>State</label>
+                                <input type="text" class="form-control" [(ngModel)]="newAddress.state" name="state" required placeholder="State">
+                            </div>
+                            <div class="form-group col-sm">
+                                <label>ZIP Code</label>
+                                <input type="text" class="form-control" [(ngModel)]="newAddress.zip" name="zip" required placeholder="12345">
+                            </div>
+                        </div>
+                        <div class="button-group">
+                            <button type="submit" class="btn-primary" [disabled]="addressForm.invalid">
+                                {{ editingAddressIndex !== null ? 'Update Address' : 'Save Address' }}
+                            </button>
+                            <button type="button" class="btn-secondary" (click)="cancelAddressEdit()">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Address List -->
+                <div class="items-list" *ngIf="!showAddAddress">
+                    <div *ngIf="addresses.length === 0" class="empty-state">
+                        <p>No saved addresses yet.</p>
+                        <p class="subtitle">Add an address to make checkout faster!</p>
+                    </div>
+                    <div class="item-card" *ngFor="let addr of addresses; let i = index">
+                        <div class="item-info">
+                            <strong>{{ addr.name }}</strong>
+                            <p>{{ addr.address }}</p>
+                            <p>{{ addr.city }}, {{ addr.state }} {{ addr.zip }}</p>
+                        </div>
+                        <div class="item-actions">
+                            <button class="btn-secondary btn-sm" (click)="editAddress(i)">Edit</button>
+                            <button class="btn-danger btn-sm" (click)="removeAddress(i)">Remove</button>
+                        </div>
+                    </div>
                 </div>
             </div>
-<br><hr><br>
-            <!-- Address Settingss -->
-            <button class="btn-primary slight-margin" data-toggle="collapse" data-target="#address">Address
-                List &#9660;</button>
 
-            <div class="collapse" id="address">
-                <button class=" slight-margin btn-secondary" data-toggle="collapse" data-target="#address-list">
-                    Address List &#9660;</button><br>
-                <div class="collapse" id="address-list">
-                    <foodorb-address-list></foodorb-address-list>
-                </div>
-                <button class="btn-secondary slight-margin" data-toggle="collapse" data-target="#add-address">
-                    Add Address  <b>+</b></button>
-
-                <div class="collapse" id="add-address">
-                    <foodorb-add-address></foodorb-add-address>
+            <!-- Payments Tab -->
+            <div class="tab-content" *ngIf="activeTab === 'payments'">
+                <div class="section-header">
+                    <div>
+                        <h3>Payment Methods</h3>
+                        <p class="subtitle">Manage your saved payment methods</p>
+                    </div>
+                    <button class="btn-primary" (click)="toggleAddPayment()" *ngIf="!showAddPayment">
+                        + Add Payment
+                    </button>
                 </div>
 
+                <!-- Add Payment Form -->
+                <div class="add-form" *ngIf="showAddPayment">
+                    <h4>Add New Payment Method</h4>
+                    <form (ngSubmit)="savePayment()" #paymentForm="ngForm">
+                        <div class="form-group">
+                            <label>Card Type / Name</label>
+                            <input type="text" class="form-control" [(ngModel)]="newPayment.name" name="cardName" required placeholder="e.g., Visa, Mastercard">
+                        </div>
+                        <div class="form-group">
+                            <label>Card Number</label>
+                            <input type="text" class="form-control" [(ngModel)]="newPayment.card" name="cardNumber" required minlength="13" maxlength="19" placeholder="1234 5678 9012 3456">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col">
+                                <label>Expiration Date</label>
+                                <input type="text" class="form-control" [(ngModel)]="newPayment.date" name="expDate" required placeholder="MM/YY">
+                            </div>
+                            <div class="form-group col">
+                                <label>CVC</label>
+                                <input type="text" class="form-control" [(ngModel)]="newPayment.cvc" name="cvc" minlength="3" maxlength="4" placeholder="123">
+                            </div>
+                        </div>
+                        <div class="button-group">
+                            <button type="submit" class="btn-primary" [disabled]="paymentForm.invalid">Save Payment</button>
+                            <button type="button" class="btn-secondary" (click)="cancelPaymentAdd()">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Payment List -->
+                <div class="items-list" *ngIf="!showAddPayment">
+                    <div *ngIf="payments.length === 0" class="empty-state">
+                        <p>No saved payment methods yet.</p>
+                        <p class="subtitle">Add a payment method to make checkout faster!</p>
+                    </div>
+                    <div class="item-card" *ngFor="let payment of payments; let i = index">
+                        <div class="item-info">
+                            <strong>{{ payment.name }}</strong>
+                            <p>Card: {{ payment.card }}</p>
+                            <p>Expires: {{ payment.date }}</p>
+                        </div>
+                        <div class="item-actions">
+                            <button class="btn-danger btn-sm" (click)="removePayment(i)">Remove</button>
+                        </div>
+                    </div>
+                </div>
             </div>
+
         </div>
+    </div>
+
+    <div class="text-center margin-top">
+        <button routerLink="/" class="btn-secondary">Back to Home</button>
     </div>
 </div>

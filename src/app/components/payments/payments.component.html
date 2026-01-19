@@ -1,1 +1,13 @@
-<p>payments works!</p>
+<div class="payments-list">
+    <div *ngIf="payments.length === 0">
+        <p>No saved payment methods. Add one below!</p>
+    </div>
+    <ul *ngIf="payments.length > 0">
+        <li *ngFor="let payment of payments; let i = index" class="payment-item">
+            <strong>{{ payment.name }}</strong><br>
+            Card: {{ payment.card }}<br>
+            Expires: {{ payment.date }}
+            <button class="btn-secondary slight-margin" (click)="removePayment(i)">Remove</button>
+        </li>
+    </ul>
+</div>

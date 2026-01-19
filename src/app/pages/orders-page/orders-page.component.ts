@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { IFood } from 'src/app/interfaces/ifood';
+import { OrderService } from 'src/app/services/order.service';
+import { IOrder } from 'src/app/interfaces/iorder';
 
 @Component({
   selector: 'foodorb-orders-page',
@@ -8,14 +9,21 @@ import { IFood } from 'src/app/interfaces/ifood';
 })
 export class OrdersPageComponent implements OnInit {
 
-// HARD CODED
-orders: IFood[] = [
-  { foodID: 1, foodName: "chicken", restaurant: "McDonalds", description: "Large juicy chicken nuggets breaded or battered, then deep-fried or baked.", price: 10}
-]
+  orders: IOrder[] = [];
 
-  constructor() { }
+  constructor(private orderService: OrderService) {}
 
   ngOnInit(): void {
+    this.orders = this.orderService.getOrders();
   }
 
+  getStatusClass(status: string): string {
+    switch (status) {
+      case 'pending': return 'status-pending';
+      case 'confirmed': return 'status-confirmed';
+      case 'delivered': return 'status-delivered';
+      case 'cancelled': return 'status-cancelled';
+      default: return '';
+    }
+  }
 }

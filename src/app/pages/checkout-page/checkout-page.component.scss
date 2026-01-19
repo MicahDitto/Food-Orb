@@ -1,0 +1,33 @@
+.margin-bottom {
+  margin-bottom: 15px;
+}
+
+.margin-top {
+  margin-top: 15px;
+}
+
+.list-group-item {
+  cursor: pointer;
+  text-align: left;
+}
+
+.list-group-item.active {
+  background-color: lightseagreen;
+  border-color: lightseagreen;
+}
+
+.btn-lg {
+  padding: 15px 30px;
+  font-size: 1.2em;
+}
+
+.form-control {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+}
+
+.form-group {
+  margin-top: 10px;
+}

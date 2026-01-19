@@ -1,42 +1,45 @@
 <div class="d-flex margin justify-content-center">
-        <div class="side-padding card">
-            <h1 class="card-header side-padding">Orders</h1>
-            <div class=" padding card-body">
-                <p>Track all your orders here.</p>
-    
-                <table class="table">
-                    <thead class="thead-dark">
-                        <h2></h2>
-                    </thead>
-                    <tbody>
-                        <tr class="thead-dark">
-                            <th scope="col">Restaurant:</th>
-                            <th scope="col">Item Name:</th>
-                            <th scope="col">ID:</th>
-                            <th scope="col">Price:</th>
-                            <th scope="col"></th>
-                        </tr>
-                        <tr class="data" *ngFor="let order of orders; let i = index">
-                             <td>
-                                <a >{{order.restaurant}}</a>
-                            </td>
-                            <td>
-                                <a>{{order.foodName | titlecase}}</a>
-                            </td>
-                            <td>
-                                <a>{{order.foodID}}</a>
-                            </td>
-                            <td>
-                                <a>{{order.price | currency}} </a>
-                            </td>
-                            <td><button routerLink="/orders/:id">View Order</button></td>
-                            
-                        </tr>
-                        
-                    </tbody>
-                </table>
-                
-                <button routerLink="" class="btn-secondary" type="">Home</button>
+    <div class="side-padding card">
+        <h1 class="card-header side-padding">Orders</h1>
+        <div class="padding card-body">
+            <p>Track all your orders here.</p>
+
+            <div *ngIf="orders.length === 0">
+                <p>No orders yet. Start shopping!</p>
             </div>
+
+            <table class="table" *ngIf="orders.length > 0">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Order #</th>
+                        <th scope="col">Items</th>
+                        <th scope="col">Total</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="data" *ngFor="let order of orders">
+                        <td>{{ order.id }}</td>
+                        <td>
+                            <span *ngFor="let item of order.items; let last = last">
+                                {{ item.foodName | titlecase }}<span *ngIf="!last">, </span>
+                            </span>
+                        </td>
+                        <td>{{ order.total | currency }}</td>
+                        <td>
+                            <span [class]="getStatusClass(order.status)">
+                                {{ order.status | titlecase }}
+                            </span>
+                        </td>
+                        <td>
+                            <button class="btn-secondary" [routerLink]="['/orders', order.id]">View</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <button routerLink="" class="btn-secondary">Home</button>
         </div>
     </div>
+</div>

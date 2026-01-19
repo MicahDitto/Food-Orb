@@ -1,36 +1,56 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { throwError } from 'rxjs';
+import { Observable } from 'rxjs';
+import { IFood } from "../interfaces/ifood";
+import { IRestaurant } from "../interfaces/irestaurant";
+import { StorageService } from "./storage.service";
 
 @Injectable({
   providedIn: "root"
 })
 export class CartService {
-  cart = [];
-  private url: string = "http://localhost:3000/foods";
+  private cartKey = 'cart';
+  private apiUrl = "http://localhost:3000";
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private storage: StorageService
+  ) {}
 
-  getFoods() {
-    return this.http.get(this.url);
+  getFoods(): Observable<IFood[]> {
+    return this.http.get<IFood[]>(`${this.apiUrl}/foods`);
   }
 
-  private handleError(error: any) {
-    let errMsg: string;
-    errMsg = error.message ? error.message : error.toString();
-    console.log(errMsg);
-    return throwError(errMsg);
+  getRestaurants(): Observable<IRestaurant[]> {
+    return this.http.get<IRestaurant[]>(`${this.apiUrl}/restaurants`);
   }
 
-  addToCart(value) {
-    this.cart.push(value);
+  addToCart(item: IFood): void {
+    const cart = this.getItemsFromCart();
+    cart.push(item);
+    this.saveCart(cart);
   }
 
-  getItemsFromCart() {
-    return this.cart;
+  getItemsFromCart(): IFood[] {
+    const cartJson = this.storage.getItem(this.cartKey);
+    return cartJson ? JSON.parse(cartJson) : [];
   }
 
-  clearCart() {
-    this.cart = [];
+  removeFromCart(index: number): void {
+    const cart = this.getItemsFromCart();
+    cart.splice(index, 1);
+    this.saveCart(cart);
+  }
+
+  clearCart(): void {
+    this.storage.removeItem(this.cartKey);
+  }
+
+  getCartCount(): number {
+    return this.getItemsFromCart().length;
+  }
+
+  private saveCart(cart: IFood[]): void {
+    this.storage.setItem(this.cartKey, JSON.stringify(cart));
   }
 }

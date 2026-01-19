@@ -1,64 +1,97 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { CartService } from './cart.service';
+import { StorageService } from './storage.service';
+import { IUser } from '../interfaces/iuser';
+
+interface LoginResponse {
+  accessToken: string;
+}
+
+interface RegisterModel {
+  fullName: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+}
+
+interface Address {
+  name: string;
+  address: string;
+  city: string;
+  state: string;
+  zip: string;
+}
+
+interface Payment {
+  name: string;
+  card: string;
+  date: string;
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  constructor(private http: HttpClient, private router: Router, private cart: CartService) { }
+  private apiUrl = 'http://localhost:3000';
 
-  login(model : { email : string, password : string }) {
-    console.log(model.email)
-    return this.http.post("http://localhost:3000/login", model)
-      .subscribe((response: any) => {
-        window.localStorage.setItem("access-token", response.accessToken)
-        this.getUserDetails(model.email)
-        // window.localStorage.setItem("name", response.name)
-        // window.localStorage.setItem("id", response.id)
-        // window.localStorage.setItem("email", response.email)
-        this.router.navigateByUrl("");
-        return response
-      }, () => {
-        this.router.navigateByUrl("/login");
-      })
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private cart: CartService,
+    private storage: StorageService
+  ) {}
+
+  login(model: { email: string, password: string }): Observable<LoginResponse> {
+    return this.http.post<LoginResponse>(`${this.apiUrl}/login`, model)
+      .pipe(
+        tap((response) => {
+          this.storage.setAccessToken(response.accessToken);
+        })
+      );
   }
 
-  register(model) {
-    return this.http.post("http://localhost:3000/register", model)
-      .subscribe((response: any) => {
-        this.router.navigateByUrl("/login");
-        return response;
-      }, () => {
-        this.router.navigateByUrl("/login");
-      })
+  register(model: RegisterModel): Observable<any> {
+    return this.http.post(`${this.apiUrl}/register`, model);
   }
 
-  logout() {
-    this.cart.clearCart()
-    window.localStorage.removeItem("access-token");
-    this.router.navigateByUrl("/login");
+  logout(): void {
+    this.cart.clearCart();
+    this.storage.removeAccessToken();
+    this.router.navigateByUrl('/login');
   }
 
-  getUserDetails(userEmail) {
-    return this.http.get("http://localhost:3000/users?email=" + userEmail );
+  getUserDetails(userEmail: string): Observable<IUser[]> {
+    return this.http.get<IUser[]>(`${this.apiUrl}/users?email=${userEmail}`);
   }
 
-  addAddressToUser(model, id) {
-    this.router.navigateByUrl("/settings");
-    return this.http.patch("http://localhost:3000/users" + id, {address : model}).subscribe((response : any) => {
-    });
+  addAddressToUser(addresses: Address[], userId: string): void {
+    this.router.navigateByUrl('/settings');
+    this.http.patch(`${this.apiUrl}/users/${userId}`, { address: addresses })
+      .subscribe();
   }
 
-  updateAddresses(model, id) {
-    return this.http.patch("http://localhost:3000/users" + id, {address : model}).subscribe((response : any) => {
-    });
+  updateAddresses(addresses: Address[], userId: string): void {
+    this.http.patch(`${this.apiUrl}/users/${userId}`, { address: addresses })
+      .subscribe();
   }
 
-  getAddressesForUser(id) {
-    return this.http.get("http://localhost:3000/users" + id);
+  getAddressesForUser(userId: string): Observable<IUser> {
+    return this.http.get<IUser>(`${this.apiUrl}/users/${userId}`);
   }
 
+  addPaymentToUser(payments: Payment[], userId: string): void {
+    this.router.navigateByUrl('/settings');
+    this.http.patch(`${this.apiUrl}/users/${userId}`, { payments: payments })
+      .subscribe();
+  }
+
+  updatePayments(payments: Payment[], userId: string): void {
+    this.http.patch(`${this.apiUrl}/users/${userId}`, { payments: payments })
+      .subscribe();
+  }
 }

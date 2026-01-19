@@ -3,36 +3,35 @@
         <div class="">
             <h2 class="food-orb">Food&#x26AB;rb </h2>
         </div>
-       <!-- <div class="icon" style="z-index: -1;">
-            <span style='font-size:100px;'>&#9732;</span>
-        </div> -->
     </div>
- 
 </div>
-<div *ngIf="!loggedIn" class="top-under ">
-    <div class="align-right">
-        <a routerLink="/">Home</a> |
-        <a routerLink="/login">Login</a> |
-        <a routerLink="/register">Register</a> |
 
-        <!-- Dropdown -->
-        <!-- <button onclick="show()" class="dropbtn">Options</button>
-        <div class="dropdown-content" id="dropdown-menu">
-            <a routerLink="/register">Register</a> 
-            <a routerLink="/register">Register</a> 
-            <a routerLink="/register">Register</a> 
-        </div> -->
-        <a routerLink="/profile">Profile</a> |
-        <a routerLink="/cart">Cart</a> |
-        <a routerLink="/tracking">Tracking</a> |
-        <a routerLink="/users">Users</a> |
-        <a routerLink="/settings">Settings</a> |
+<!-- Guest Navigation -->
+<div *ngIf="!loggedIn" class="top-under">
+    <div class="align-right">
+        <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a> |
+        <a routerLink="/login" routerLinkActive="active">Login</a> |
+        <a routerLink="/register" routerLinkActive="active">Register</a> |
+        <a routerLink="/cart" routerLinkActive="active">
+            Cart
+            <span *ngIf="cartCount > 0" class="cart-badge">({{ cartCount }})</span>
+        </a>
     </div>
     <div class="styler"></div>
-    
 </div>
-<div *ngIf="loggedIn" class="top-under ">
+
+<!-- Logged In Navigation -->
+<div *ngIf="loggedIn" class="top-under">
     <div class="align-right">
-        
+        <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a> |
+        <a routerLink="/profile" routerLinkActive="active">Profile</a> |
+        <a routerLink="/cart" routerLinkActive="active">
+            Cart
+            <span *ngIf="cartCount > 0" class="cart-badge">({{ cartCount }})</span>
+        </a> |
+        <a routerLink="/orders" routerLinkActive="active">Orders</a> |
+        <a routerLink="/settings" routerLinkActive="active">Settings</a> |
+        <a href="javascript:void(0)" (click)="logout()">Logout</a>
     </div>
-</div><div class="styler"></div>
+    <div class="styler"></div>
+</div>

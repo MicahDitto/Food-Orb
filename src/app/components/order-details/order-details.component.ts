@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { IFood } from 'src/app/interfaces/ifood';
+import { ActivatedRoute, Router } from '@angular/router';
+import { OrderService } from 'src/app/services/order.service';
+import { IOrder } from 'src/app/interfaces/iorder';
 
 @Component({
   selector: 'foodorb-order-details',
@@ -7,26 +9,39 @@ import { IFood } from 'src/app/interfaces/ifood';
   styleUrls: ['./order-details.component.scss']
 })
 export class OrderDetailsComponent implements OnInit {
-// HARDCODED CHANGE 
-order: IFood[] = [
-  { foodID: 1, foodName: "chicken", restaurant: "McDonalds", description: "Large juicy chicken nuggets breaded or battered, then deep-fried or baked.", price: 10}
-]
-// HARDCODED CHANGE 
-user = {
-  address: "101 Placeholder Rd"
-}
 
-  constructor() { }
+  order: IOrder | undefined;
+
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private orderService: OrderService
+  ) {}
 
   ngOnInit(): void {
+    const orderId = Number(this.route.snapshot.paramMap.get('order_id'));
+    this.order = this.orderService.getOrderById(orderId);
   }
-  confirmCancel() {
-    if(confirm("Are you sure you want to delete Order #"+this.order+"?")) {
+
+  confirmCancel(): void {
+    if (!this.order) return;
+
+    if (confirm(`Are you sure you want to cancel Order #${this.order.id}?`)) {
       this.cancelOrder();
     }
   }
-  cancelOrder() {
-    alert("Your order has been canceled.")
 
+  cancelOrder(): void {
+    if (!this.order) return;
+
+    const success = this.orderService.cancelOrder(this.order.id);
+    if (success) {
+      alert('Your order has been cancelled.');
+      this.order.status = 'cancelled';
+    }
+  }
+
+  goBack(): void {
+    this.router.navigateByUrl('/orders');
   }
 }

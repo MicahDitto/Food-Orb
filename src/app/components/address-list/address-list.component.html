@@ -1,1 +1,12 @@
-<p>address-list works!</p>
+<div class="address-list">
+    <div *ngIf="addresses.length === 0">
+        <p>No saved addresses. Add one below!</p>
+    </div>
+    <ul *ngIf="addresses.length > 0">
+        <li *ngFor="let addr of addresses; let i = index" class="address-item">
+            <strong>{{ addr.name }}</strong><br>
+            {{ formatAddress(addr) }}
+            <button class="btn-secondary slight-margin" (click)="removeAddress(i)">Remove</button>
+        </li>
+    </ul>
+</div>
